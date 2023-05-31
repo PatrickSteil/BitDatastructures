@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
-#include "EliasFano.h"
-#include "NaiveRMQ.h"
+#include "Pred/EliasFano.h"
+#include "RMQ/NaiveRMQ.h"
 
 int main(int argc, char const *argv[]) {
   using std::chrono::duration;
@@ -92,10 +92,10 @@ int main(int argc, char const *argv[]) {
     outputFile << r << std::endl;
   outputFile.close();
 
-  std::cout << "********************" << std::endl;
+  // std::cout << "********************" << std::endl;
   std::cout << "RESULT algo=" << TYPE_OF_PROGRAMM
             << " namepatrick_steil time=" << ms_int.count()
             << " space=" << totalSpaceConsumption << std::endl;
-  std::cout << "********************" << std::endl;
+  // std::cout << "********************" << std::endl;
   return 0;
 }

@@ -13,17 +13,13 @@ Compile the programm using the Makefile, e.g., `make Release`. You can call the 
 For example for Predecessor:
 
 ```
->> ./ads_programm pd test_pd.txt output_test_pd.txt
-********************
+>> ./ads_programm pd Pred/test_pd.txt Pred/output_test_pd.txt
 RESULT algo=pd namepatrick_steil time=0 space=1632
-********************
 ```
 
 or for RangeMinimumQueries:
 
 ```
->> ./ads_programm rmq test_rmq.txt output_test_rmq.txt
-********************
+>> ./ads_programm rmq RMQ/test_rmq.txt RMQ/output_test_rmq.txt
 RESULT algo=rmq namepatrick_steil time=0 space=256
-********************
 ```

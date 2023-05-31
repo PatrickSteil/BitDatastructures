@@ -1,4 +1,4 @@
-#include "BitVector.h"
+#include "../BitVector/BitVector.h"
 // #include <bitset> // just to print stuff
 #include <vector>
 
