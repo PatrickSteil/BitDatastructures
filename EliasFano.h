@@ -1,5 +1,5 @@
 #include "BitVector.h"
-#include <bitset> // just to print stuff
+// #include <bitset> // just to print stuff
 #include <vector>
 
 namespace EF {
