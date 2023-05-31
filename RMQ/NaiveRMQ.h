@@ -15,6 +15,7 @@ public:
               "e (the second index) is out of bounds!");
     assertmsg(s <= e, "s should not be greater than e!");
 
+    if (s == e) return s;
     return values[s * numValues + e];
   }
 

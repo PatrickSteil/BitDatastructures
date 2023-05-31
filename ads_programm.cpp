@@ -6,7 +6,8 @@
 #include <vector>
 
 #include "Pred/EliasFano.h"
-#include "RMQ/NaiveRMQ.h"
+// #include "RMQ/NaiveRMQ.h"
+#include "RMQ/NLogNRMQ.h"
 
 int main(int argc, char const *argv[]) {
   using std::chrono::duration;
@@ -72,11 +73,11 @@ int main(int argc, char const *argv[]) {
       }
       result.reserve(queries.size());
 
-      RMQ::NaiveRMQ naive(numbers);
-      totalSpaceConsumption = (naive.totalSizeByte() << 3);
+      RMQ::NLogNRMQ RMQ(numbers);
+      totalSpaceConsumption = (RMQ.totalSizeByte() << 3);
 
       for (auto paar : queries) {
-        result.push_back(naive.rmq(paar.first, paar.second));
+        result.push_back(RMQ.rmq(paar.first, paar.second));
       }
     } else {
       std::cout << "Your type of query (" << TYPE_OF_PROGRAMM
