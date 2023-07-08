@@ -1,25 +1,23 @@
 #include <cmath>
 #include <vector>
 
-namespace RMQ {
 class NLogNRMQ {
 public:
   NLogNRMQ(const std::vector<uint64_t> &A) : A(A), M(A.size()) {
-    assertmsg(A.size() > 0, "Array is empty??");
+    assert(A.size() > 0);
     buildValues();
   };
 
   inline uint64_t rmq(int s, int e) const {
-    assertmsg(0 <= s && s < (int)A.size(),
-              "s (the first index) is out of bounds!");
-    assertmsg(0 <= e && e < (int)A.size(),
-              "e (the second index) is out of bounds!");
-    assertmsg(s <= e, "s should not be greater than e!");
+    assertSandEinRange(s, e);
 
-    if (s == e) return s;
-    if (s + 1 == e) return (A[s] < A[e] ? s : e);
+    // some edge cases
+    if (s == e)
+      return s;
+    if (s + 1 == e)
+      return (A[s] < A[e] ? s : e);
 
-    int l = std::floor(std::log2(e - s - 1));
+    int l = std::floor(std::log2(e - s + 1));
     uint64_t m1 = subRMQ(s, s + (1 << l) - 1);
     uint64_t m2 = subRMQ(e - (1 << l) + 1, e);
 
@@ -27,12 +25,14 @@ public:
   }
 
   inline uint64_t subRMQ(int s, int e) const {
-    assertmsg(0 <= s && s < (int)A.size(),
-              "s (the first index) is out of bounds!");
-    assertmsg(0 <= e && e < (int)A.size(),
-              "e (the second index) is out of bounds!");
-    assertmsg(s <= e, "s should not be greater than e!");
+    assertSandEinRange(s, e);
     return M[s][e];
+  }
+
+  inline void assertSandEinRange(int &s, int &e) const {
+    assert(0 <= s && s < (int)A.size());
+    assert(0 <= e && e < (int)A.size());
+    assert(s <= e);
   }
 
   inline size_t totalSizeByte() const noexcept {
@@ -62,8 +62,9 @@ private:
 
     for (size_t l(1); l < M[0].size(); ++l) {
       for (size_t x(0); x < A.size(); ++x) {
-        if ((size_t) x + (1 << (l - 1)) >= A.size()) continue;
-        assertmsg((size_t) x + (1 << (l - 1)) < A.size(), "Something wrong?");
+        // if this is out of bounds => skip it
+        if ((size_t)x + (1 << (l - 1)) >= A.size())
+          continue;
         M[x][l] = (A[M[x][l - 1]] < A[M[x + (1 << (l - 1))][l - 1]])
                       ? M[x][l - 1]
                       : M[x + (1 << (l - 1))][l - 1];
@@ -74,4 +75,3 @@ private:
   const std::vector<uint64_t> A;
   std::vector<std::vector<uint64_t>> M;
 };
-} // namespace RMQ
