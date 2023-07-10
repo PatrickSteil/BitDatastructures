@@ -1,9 +1,9 @@
 #include "../Helper.h"
 // #include <bitset>
+#include <climits>
 #include <cmath> // ceil
 #include <iostream>
 #include <vector>
-#include <climits>
 
 namespace StraightFWDBIV {
 

@@ -18,8 +18,8 @@ int main() {
 
   // std::cout << std::endl;
 
-  // std::vector<bool> bits2 = {1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
-  // BitVector bv2(bits2);
+  // std::vector<bool> bits2 = {1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+  // 0}; BitVector bv2(bits2);
 
   // // Perform rank queries
   // std::cout << "Rank of 1 at position 4: " << bv2.rank(1, 2) << std::endl;
@@ -33,7 +33,10 @@ int main() {
 
   // std::cout << std::endl;
 
-  std::vector<bool> bits3 = {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+  std::vector<bool> bits3 = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1,
+                             0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+                             0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                             1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   BitVector bv3(bits3);
 
   std::cout << "Select 0 at rank 18: " << bv3.select(0, 18 - 1) << std::endl;

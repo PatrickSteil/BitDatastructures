@@ -47,12 +47,14 @@ public:
     uint64_t xStar = (number & ~(mask)) >> lowerSize;
     uint64_t p = (xStar > 0 ? upper.selectFalse(xStar) - xStar + 1 : 0);
     uint64_t nextP = upper.selectFalse(xStar + 1) - xStar;
-    std::cout << "Number: " << number << " x': " << std::bitset<64>(xStar) << " Rank: " << p << " Next P: " << nextP << std::endl;
+    std::cout << "Number: " << number << " x': " << std::bitset<64>(xStar)
+              << " Rank: " << p << " Next P: " << nextP << std::endl;
     // scan corresponding values in lower till predecessor is found
     uint64_t result = (xStar << lowerSize);
     std::cout << "Maske: " << std::bitset<64>(mask) << std::endl;
     // int i(p * lowerSize);
-    // std::cout << "Select False: " << p << " for number " << number << " xStar is " << xStar << std::endl;
+    // std::cout << "Select False: " << p << " for number " << number << " xStar
+    // is " << xStar << std::endl;
 
     // std::cout << number << " or: " << std::bitset<64>(number) << std::endl;
     // std::cout << "Result: " << std::bitset<64>(result) << std::endl;
@@ -75,10 +77,12 @@ public:
         currentValue |= lower[rank + i];
       }
 
-      std::cout << "currentValue: " << std::bitset<64>(currentValue) << " vs " << std::bitset<64>((number & mask)) << std::endl;
+      std::cout << "currentValue: " << std::bitset<64>(currentValue) << " vs "
+                << std::bitset<64>((number & mask)) << std::endl;
       if (currentValue <= (number & mask)) {
         result = (result & ~(mask)) | (currentValue & mask);
-        std::cout << "Current Result: " << std::bitset<64>(result) << "\n\t" << result << std::endl;
+        std::cout << "Current Result: " << std::bitset<64>(result) << "\n\t"
+                  << result << std::endl;
       } else
         return result;
       rank += lowerSize;
@@ -120,7 +124,8 @@ private:
         // std::cout << numbers[i] << " offset " << offset << " and " <<
         // std::bitset<64>((smaller_p_i & ((uint64_t)1 << (lowerSize - offset -
         // 1))) >> (lowerSize - offset - 1)) << std::endl;
-        if (uint64_t((smaller_p_i & ((uint64_t)1 << (lowerSize - offset - 1))) >>
+        if (uint64_t(
+                (smaller_p_i & ((uint64_t)1 << (lowerSize - offset - 1))) >>
                 (lowerSize - offset - 1))) {
           // std::cout << "Set " << (i * lowerSize + offset) << " bit in lower"
           //           << std::endl;

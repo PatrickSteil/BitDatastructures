@@ -1,6 +1,5 @@
 #include <vector>
 
-namespace RMQ {
 class NaiveRMQ {
 public:
   NaiveRMQ(const std::vector<uint64_t> &A)
@@ -9,21 +8,19 @@ public:
   };
 
   inline uint64_t rmq(int s, int e) const {
-    assertmsg(0 <= s && s < (int)numValues,
-              "s (the first index) is out of bounds!");
-    assertmsg(0 <= e && e < (int)numValues,
-              "e (the second index) is out of bounds!");
-    assertmsg(s <= e, "s should not be greater than e!");
+    assert(0 <= s && s < (int)numValues);
+    assert(0 <= e && e < (int)numValues);
+    assert(s <= e);
 
     if (s == e)
       return s;
-    return values[s * numValues + e];
+    return values[s * numValues + e] - s;
   }
 
   inline size_t totalSizeByte() const noexcept {
     size_t total(0);
     total += sizeof(numValues);
-    total += sizeof(values);
+    total += values.size() * sizeof(values[0]);
     return total;
   }
 
@@ -38,7 +35,7 @@ public:
 
 private:
   inline void buildValues(const std::vector<uint64_t> &A) {
-    assertmsg(A.size() > 0, "Array is empty??");
+    assert(A.size() > 0);
     for (size_t i(0); i < numValues; ++i) {
       values[i * numValues + i] = i;
       for (size_t j(i + 1); j < numValues; ++j) {
@@ -52,4 +49,3 @@ private:
   size_t numValues;
   std::vector<uint64_t> values;
 };
-} // namespace RMQ

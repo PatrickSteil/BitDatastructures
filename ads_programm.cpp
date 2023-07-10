@@ -7,8 +7,17 @@
 
 #include "EliasFano/EliasFano.h"
 // #include "RMQ/NaiveRMQ.h"
-#include "RMQ/NLogNRMQ.h"
 #include "Helper.h"
+#include "RMQ/NLogNRMQ.h"
+
+bool isMinimumInRange(uint64_t resultRMQ, std::vector<uint64_t> &numbers,
+                      uint64_t i, uint64_t j) {
+  auto minIt = std::min_element(numbers.begin() + i, numbers.begin() + j + 1);
+  uint64_t minimum = *minIt;
+  // std::cout << resultRMQ << "\t" << i << "\t" << j << std::endl;
+  // std::cout << numbers[i + resultRMQ] << "\t" << minimum << std::endl;
+  return numbers[i + resultRMQ] == minimum;
+}
 
 int main(int argc, char const *argv[]) {
   using std::chrono::duration;
@@ -88,8 +97,11 @@ int main(int argc, char const *argv[]) {
       totalSpaceConsumption = RMQ.totalSizeByte();
 
       // execute the queries
+      uint64_t resultRMQ(0);
       for (auto paar : queries) {
-        result.push_back(RMQ.rmq(paar.first, paar.second));
+        resultRMQ = RMQ.rmq(paar.first, paar.second);
+        assert(isMinimumInRange(resultRMQ, numbers, paar.first, paar.second));
+        result.push_back(resultRMQ);
       }
     } else {
       std::cout << "Your type of query (" << TYPE_OF_PROGRAMM
@@ -108,7 +120,7 @@ int main(int argc, char const *argv[]) {
 
   std::cout << "********************" << std::endl;
   std::cout << "RESULT algo=" << TYPE_OF_PROGRAMM
-            << " namepatrick_steil time=" << ms_int.count()
+            << " name=patrick_steil time=" << ms_int.count()
             << " space=" << totalSpaceConsumption << std::endl;
   std::cout << "********************" << std::endl;
   return 0;

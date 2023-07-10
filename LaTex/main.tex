@@ -1,0 +1,82 @@
+\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate]{lipics-v2021}
+
+\usepackage{amsmath}
+\usepackage{numprint}
+
+\bibliographystyle{plainurl}
+
+\title{Advanced Data Structures: Final Report}
+
+\author{Steil, Patrick}{2513240}{patrick.steil@student.kit.edu}{}{}
+
+\authorrunning{Steil, Patrick}
+
+\Copyright{P. Steil}
+
+\keywords{Predecessor, Range Minimum Queries} %TODO mandatory; please add comma-separated list of keywords
+
+\category{} %optional, e.g. invited paper
+
+\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+%\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
+
+\supplement{Source Code: \url{https://github.com/PatrickSteil/BitDatastructures}}
+
+
+%\nolinenumbers %uncomment to disable line numbering
+
+
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{}
+\EventNoEds{0}
+\EventLongTitle{}
+\EventShortTitle{}
+\EventAcronym{}
+\EventYear{0}
+\EventDate{0}
+\EventLocation{}
+\EventLogo{}
+\SeriesVolume{0}
+\ArticleNo{0}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{Introduction}
+	\label{sec:introduction}
+	
+	In this work, different data structures are implemented that can efficiently answer two types of queries: predecessor data structures and range-minimum queries. For this purpose, the \textit{Elias-Fano coding} and several ``Block-Lookup'' data structures are implemented and tested.
+	The project is part of the lecture ``Advanced Data Structures'' at KIT in the summer semester 2023 with Dr.~Florian Kurpicz.
+	
+	\section{Algorithms and Data Structures}
+	\label{sec:algorithms}
+	\paragraph*{Predecessor data structures}
+	
+	Predecessor data structures are special data structures that were developed to efficiently solve the problem of predecessor access. The predecessor access problem is to find the predecessor (the element with the highest value that is less than a given element) in a set of elements.
+	Without additional memory consumption, elements can be stored sorted or in a binary search tree, whereby a predecessor query can subsequently be answered with a runtime of~$\mathcal{O}\left(\log(n)\right)$. However, this is too slow in practice, which is why techniques such as \textit{x/y-fast-tries}~\cite{WILLARD198381} or \textit{Elias-Fano encoding}~\cite{10.1145/321812.321820} have been developed. The idea of the last technique is to divide the representation of numbers into two parts, on the one hand the \textit{most significants} bits with a length of~$\left\lceil\log\left(n\right)\right\rceil$ and on the other hand the remaining bits. This way, all numbers with the same \textit{most significants} bits are ``grouped'' during a query, which means that a query only has to look at one ``group'' of numbers. However, this may result in all numbers having to be scanned if the numbers are not favourable.
+	
+	\paragraph*{Range minimum queries}
+	Range minimum queries (RMQ) refer to a special type of search operation in data structures where the minimum value within a given interval (range) of elements in a set is to be found. The goal is to efficiently find the smallest value among a subset of elements. Analogous to the predecessor data structures, there are trade-offs between additional memory and runtime (the different pre-computation times can be neglected for static data). To be able to answer RMQ quickly, one can use~$\Theta\left(n^2\right)$ additional memory to calculate all possible queries in advance and thus obtain a constant query time (a lookup). To reduce the impractical quadratic memory, one can now only precompute queries of certain ranges. If the size of this range is cleverly chosen, one obtains constant query time and down to only linear additional memory.
+	
+	\section{Implementation}
+	
+	\subsection{Elias-Fano}
+	For an efficient Elias-Fano implementation, one needs a bit-vector data structure that can efficiently answer \textsc{select} query. The actual Elias-Fano data structure then consists of two bit vectors: \textit{upperBits} and \textit{lowerBits}. The former encodes in~$2n+1$ bits the \textit{most significants bits} (MSB) of the numbers, and in \textit{lowerBits} the remaining bits (LSB) of the numbers are stored straightforward. As a note: In the script, the first~$\left\lceil \log\left(n\right)\right\rceil$ bits were defined as MSB, but this definition caused problems with e.g. the following numbers:
+	
+	\begin{equation*}
+		0, 1, 10, 13, 32, 64, 1926720561250547757, 4354482840745948438, 18446013172173323708
+	\end{equation*}
+	Now, looking at the various MSBs of length~$\left\lceil \log\left(n\right)\right\rceil = 4$, we see:
+	
+	\begin{equation}
+		\left(0000\right)_2, \left(0001\right)_2, \left(0011\right)_2, \left(1111\right)_2
+	\end{equation}
+	
+	If \textit{upperBits} has a length of~$2\cdot9+1 = 19$, then to decode the last number, you would need to acces the index~$\left(1111\right)_2 + 8 = 39$, which is out of bounds for \textit{upperBits}. Therefore, I decided to use~$\left\lfloor \log\left(n\right)\right\rfloor$ for the length of the MSB.
+	
+	Otherwise, my implementation of \textsc{predecessor} is based on the description of \url{https://arxiv.org/pdf/2003.11835.pdf}. To identify the predecessor of the number~$x$, use \textsc{select} queries to find the ``leftmost'' and ``rightmost'' index of numbers for which the MSB is equal to the MSB of~$x$. Subsequently, it is just a matter of scanning this range to find the predecessor.
+	
+	\bibliography{bibl}
+\end{document}
