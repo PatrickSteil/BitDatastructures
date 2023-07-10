@@ -7,7 +7,6 @@
 
 #include "EliasFano/EliasFano.h"
 // #include "RMQ/NaiveRMQ.h"
-#include "Helper.h"
 #include "RMQ/NLogNRMQ.h"
 
 bool isMinimumInRange(uint64_t resultRMQ, std::vector<uint64_t> &numbers,
@@ -48,7 +47,7 @@ int main(int argc, char const *argv[]) {
   uint64_t totalSpaceConsumption(0);
   uint64_t n;
   inputFile >> n;
-  assertmsg(n > 0, "n is not positive?");
+  assert(n > 0);
   numbers.reserve(n);
 
   uint64_t curNumber = 0;
@@ -68,7 +67,7 @@ int main(int argc, char const *argv[]) {
     result.reserve(queries.size());
 
     EliasFanoEncoding ef(numbers);
-    ef.printInfo();
+    // ef.printInfo();
     for (auto q : queries) {
       result.push_back(ef.pred(q));
     }
@@ -118,10 +117,10 @@ int main(int argc, char const *argv[]) {
     outputFile << r << std::endl;
   outputFile.close();
 
-  std::cout << "********************" << std::endl;
+  // std::cout << "********************" << std::endl;
   std::cout << "RESULT algo=" << TYPE_OF_PROGRAMM
             << " name=patrick_steil time=" << ms_int.count()
             << " space=" << totalSpaceConsumption << std::endl;
-  std::cout << "********************" << std::endl;
+  // std::cout << "********************" << std::endl;
   return 0;
 }

@@ -1,25 +1,17 @@
 # Project
-
-The repository consists of an executable that implements EliaFano coding and three types of Range Min-Max Datastructures. See the project description in the PDF.
-
+The repository consists of an executable that implements Elias-Fano encoding and three types of Range Minimum Datastructures. See the project description in the PDF.
 ## Compile && Execution
-
-Compile the programm using the Makefile, e.g., `make Release`. You can call the programm by the following way:
-
+Compile the programm using the Makefile (call `make Release`). You can then call the programm by the following way:
 ```
 ./ads_programm [pq|rmq] INPUT_FILE OUTPUT_FILE
 ```
-
-For example for Predecessor:
-
+E.g., Predecessor:
 ```
->> ./ads_programm pd Pred/test_pd.txt Pred/output_test_pd.txt
-RESULT algo=pd namepatrick_steil time=0 space=1632
+>> ./ads_programm pd Experiments/predecessor_examples/predecessor_example_1.txt Experiments/pred_test1.txt
+RESULT algo=pd name=patrick_steil time=2909 space=376000160
 ```
-
-or for RangeMinimumQueries:
-
+or Range Minimum Queries:
 ```
->> ./ads_programm rmq RMQ/test_rmq.txt RMQ/output_test_rmq.txt
-RESULT algo=rmq namepatrick_steil time=0 space=256
+>> ./ads_programm rmq Experiments/rmq_examples/rmq_example_1.txt Experiments/rmq_test1.txt
+RESULT algo=rmq name=patrick_steil time=2266 space=32000000
 ```
