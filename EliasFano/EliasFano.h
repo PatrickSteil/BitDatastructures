@@ -20,8 +20,8 @@ public:
     EliasFano(std::vector<uint64_t>& numbers)
         : numElements(numbers.size())
     {
-	uint64_t maxElement = numbers[numElements-1];
-	offset = 64 - std::ceil(std::log2(maxElement));
+        uint64_t maxElement = numbers[numElements - 1];
+        offset = 64 - std::ceil(std::log2(maxElement));
         // old version: upperSize = std::floor(std::log2(numElements));
         upperSize = std::ceil(std::log2(numElements));
 
@@ -40,7 +40,7 @@ public:
             upperBitsVEC[MSB + i] = true;
 
             for (uint64_t j = 0; j < (64 - offset - upperSize); ++j) {
-                lowerBitsVEC[i * (64 - offset- upperSize) + j] = ((LSB >> ((64 - offset - upperSize) - 1 - j)) & 1);
+                lowerBitsVEC[i * (64 - offset - upperSize) + j] = ((LSB >> ((64 - offset - upperSize) - 1 - j)) & 1);
             }
             ++i;
         }

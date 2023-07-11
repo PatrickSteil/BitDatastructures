@@ -10,7 +10,7 @@
 #include <inttypes.h>
 
 #include "EliasFano/EliasFano.h"
-// #include "RMQ/NaiveRMQ.h"
+/* #include "RMQ/NaiveRMQ.h" */
 // #include "RMQ/NLogNRMQ.h"
 #include "RMQ/NRMQ.h"
 
@@ -105,6 +105,8 @@ int main(int argc, char const* argv[])
 
             // creeate the Range Minimum Query Object
             NRMQ RMQ(numbers);
+            /* NLogNRMQ RMQ(numbers); */
+            /* NaiveRMQ RMQ(numbers); */
             // RMQ.printInfo();
             totalSpaceConsumption = RMQ.totalSizeByte();
 
