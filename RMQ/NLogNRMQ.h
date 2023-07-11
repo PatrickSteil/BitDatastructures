@@ -5,7 +5,7 @@ class NLogNRMQ {
 public:
   NLogNRMQ(const std::vector<uint64_t> &A) : A(A), M(A.size()) {
     assert(A.size() > 0);
-    buildValues();
+    buildDatastructure();
   };
 
   inline uint64_t rmq(uint64_t s, uint64_t e) const {
@@ -45,7 +45,7 @@ public:
   }
 
 private:
-  inline void buildValues() {
+  inline void buildDatastructure() {
     // pre allocate the space
     for (size_t i(0); i < M.size(); ++i) {
       M[i].assign(std::ceil(std::log2(A.size())), i);

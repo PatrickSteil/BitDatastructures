@@ -63,7 +63,26 @@
 	\section{Implementation}
 	
 	\subsection{Elias-Fano}
-	For an efficient Elias-Fano implementation, one needs a bit-vector data structure that can efficiently answer \textsc{select} query. The actual Elias-Fano data structure then consists of two bit vectors: \textit{upperBits} and \textit{lowerBits}. The former encodes in~$2n+1$ bits the \textit{most significants bits} (MSB) of the numbers, and in \textit{lowerBits} the remaining bits (LSB) of the numbers are stored straightforward. As a note: In the script, the first~$\left\lceil \log\left(n\right)\right\rceil$ bits were defined as MSB, but this definition caused problems with e.g. the following numbers:
+	For an efficient Elias-Fano implementation, one needs a bit-vector data structure that can efficiently answer \textsc{select} query. The actual Elias-Fano data structure then consists of two bit vectors: \textit{upperBits} and \textit{lowerBits}. The former encodes in~$2n+1$ bits the \textit{most significants bits} (MSB) of the numbers, and in \textit{lowerBits} the remaining bits (LSB) of the numbers are stored straightforward. Please see the Appendix~\ref{app:sec::ef} on the ``minor'' Elias-Fano Problem which I mentioned to you in person.
+	
+	Otherwise, my implementation of \textsc{predecessor} is based on the description of \url{https://arxiv.org/pdf/2003.11835.pdf}. To identify the predecessor of the number~$x$, use \textsc{select} queries to find the ``leftmost'' and ``rightmost'' index of numbers for which the MSB is equal to the MSB of~$x$. Subsequently, it is just a matter of scanning this range to find the predecessor.
+
+	\subsection{Range-Mimimum Queries}
+	For the range-minimum queries I implemented all 3 data structures, i.e. the one with~$\mathcal{O}\left(n^2\right)$, ~$\mathcal{O}\left(n \log\left(n\right)\right)$ and the one with~$\mathcal{O}\left(n\right)$ additional memory. I have not implemented the latter data structure exactly as in the lecture, namely I have not implemented the \textit{Cartesian Trees}. I have, for queries that run between block boundaries, split the query into three parts. The initial and final part (from the left index boundary to the first ``completely covered'' block and analogously from the last covered block to the end) and the covered blocks in between. The initial and final check is usually done with Cartesian trees, I have implemented a linear search over the part of the array.
+	
+	\section{Experiments}
+	\subsection{Hardware \& Code}
+	The programming language used was C++, and the compiler was g++ with optimisations enabled. All experiments were conducted on a Macbook Pro with a 2.3 GHz dual-core Intel Core i5 processor.
+
+	\subsection{Elias-Fano}
+	
+	
+	\bibliography{bib}
+	
+	\appendix
+	\section{A Note on Elias-Fano}
+	\label{app:sec::ef}
+	In the script, the first~$\left\lceil \log\left(n\right)\right\rceil$ bits were defined as MSB, but this definition caused problems with e.g. the following numbers:
 	
 	\begin{equation*}
 		0, 1, 10, 13, 32, 64, 1926720561250547757, 4354482840745948438, 18446013172173323708
@@ -74,9 +93,5 @@
 		\left(0000\right)_2, \left(0001\right)_2, \left(0011\right)_2, \left(1111\right)_2
 	\end{equation}
 	
-	If \textit{upperBits} has a length of~$2\cdot9+1 = 19$, then to decode the last number, you would need to acces the index~$\left(1111\right)_2 + 8 = 39$, which is out of bounds for \textit{upperBits}. Therefore, I decided to use~$\left\lfloor \log\left(n\right)\right\rfloor$ for the length of the MSB.
-	
-	Otherwise, my implementation of \textsc{predecessor} is based on the description of \url{https://arxiv.org/pdf/2003.11835.pdf}. To identify the predecessor of the number~$x$, use \textsc{select} queries to find the ``leftmost'' and ``rightmost'' index of numbers for which the MSB is equal to the MSB of~$x$. Subsequently, it is just a matter of scanning this range to find the predecessor.
-	
-	\bibliography{bibl}
+	If \textit{upperBits} has a length of~$2\cdot9+1 = 19$, then to decode the last number, you would need to acces the index~$\left(1111\right)_2 + 8 = 39$, which is out of bounds for \textit{upperBits}. Therefore, I set the length of the \textit{upperBits} to~$3 \cdot n$, as discussed in the lecture.
 \end{document}

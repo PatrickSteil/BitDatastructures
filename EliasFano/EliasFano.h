@@ -42,20 +42,24 @@ public:
 
     upperBits.buildVector(upperBitsVEC);
     lowerBits.buildVector(lowerBitsVEC);
+
+    // std::cout
+    //     << "*****************\nDone building datastructures\n*****************"
+    //     << std::endl;
   }
 
   // Predecessor Method
   unsigned long long pred(unsigned long long x) const {
     // see https://arxiv.org/pdf/2003.11835.pdf
-    if ((unsigned long long)(*this)[0] >= x)
-      return std::numeric_limits<unsigned long long>::infinity();
-    if ((unsigned long long)(*this)[numElements - 1] <= x)
+    if ((unsigned long long)(*this)[0] >= x) [[unlikely]]
+      return std::numeric_limits<unsigned long long>::max();
+    if ((unsigned long long)(*this)[numElements - 1] <= x) [[unlikely]]
       return (*this)[numElements - 1];
 
     unsigned long long xHIGH = (x >> (64 - upperSize));
     unsigned long long xLOW = (x & lowerMASK());
     unsigned long long lower(0);
-    if (xHIGH > 0)
+    if (xHIGH > 0) [[likely]]
       lower = upperBits.select(0, xHIGH - 1) - xHIGH + 1;
     unsigned long long upper = upperBits.select(0, xHIGH) - xHIGH;
 
@@ -76,9 +80,6 @@ public:
     unsigned long long result = static_cast<unsigned long long>(
         ((unsigned long long)upperBits.select(1, index) - index)
         << (64 - upperSize));
-
-    // std::cout << upperBits.select(1, index) << "\t" << (upperBits.select(1,
-    // index)-index) << "\t" << std::bitset<64>(result) << std::endl;
 
     return static_cast<unsigned long long>(
         result | static_cast<unsigned long long>(getLowerAsInt(index)));

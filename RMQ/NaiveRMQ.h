@@ -4,7 +4,7 @@ class NaiveRMQ {
 public:
   NaiveRMQ(const std::vector<uint64_t> &A)
       : numValues(A.size()), values(numValues * numValues) {
-    buildValues(A);
+    buildDatastructure(A);
   };
 
   inline uint64_t rmq(int s, int e) const {
@@ -34,7 +34,7 @@ public:
   }
 
 private:
-  inline void buildValues(const std::vector<uint64_t> &A) {
+  inline void buildDatastructure(const std::vector<uint64_t> &A) {
     assert(A.size() > 0);
     for (size_t i(0); i < numValues; ++i) {
       values[i * numValues + i] = i;

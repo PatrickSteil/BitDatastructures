@@ -4,10 +4,13 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
 
 #include "EliasFano/EliasFano.h"
 // #include "RMQ/NaiveRMQ.h"
-#include "RMQ/NLogNRMQ.h"
+// #include "RMQ/NLogNRMQ.h"
+#include "RMQ/NRMQ.h"
 
 bool isMinimumInRange(uint64_t resultRMQ, std::vector<uint64_t> &numbers,
                       uint64_t i, uint64_t j) {
@@ -59,7 +62,7 @@ int main(int argc, char const *argv[]) {
   if (std::strcmp(TYPE_OF_PROGRAMM, "pd") == 0) {
     // elias fano encoding query
     std::vector<uint64_t> queries;
-    queries.reserve(1024);
+    queries.reserve((1 << 12));
     uint64_t a = 0;
     while (inputFile >> a) {
       queries.push_back(a);
@@ -71,17 +74,14 @@ int main(int argc, char const *argv[]) {
     for (auto q : queries) {
       result.push_back(ef.pred(q));
     }
-
-    // for (uint64_t i(0); i < queries.size(); ++i) {
-    //   result.push_back(ef[numbers.size() - i - 1]);
-    // }
     totalSpaceConsumption = ef.totalSizeByte();
   } else {
     if (std::strcmp(TYPE_OF_PROGRAMM, "rmq") == 0) {
       // range minimum query
-      std::vector<std::pair<int, int>> queries;
+      std::vector<std::pair<uint64_t, uint64_t>> queries;
+      queries.reserve((1 << 12));
       std::string line;
-      int b(0);
+      uint64_t b(0);
       while (std::getline(inputFile, line)) {
         std::stringstream str(line);
 
@@ -92,14 +92,19 @@ int main(int argc, char const *argv[]) {
       result.reserve(queries.size());
 
       // creeate the Range Minimum Query Object
-      NLogNRMQ RMQ(numbers);
+      NRMQ RMQ(numbers);
+      // RMQ.printInfo();
       totalSpaceConsumption = RMQ.totalSizeByte();
 
       // execute the queries
       uint64_t resultRMQ(0);
       for (auto paar : queries) {
         resultRMQ = RMQ.rmq(paar.first, paar.second);
-        assert(isMinimumInRange(resultRMQ, numbers, paar.first, paar.second));
+        // std::cout << paar.first << " " << paar.second << " " << resultRMQ <<
+        // std::endl;
+        assert(isMinimumInRange(resultRMQ, numbers, paar.first, paar.second) ||
+               !(printf("Result: %" PRIu64 ", i: %" PRIu64 ", j: %" PRIu64 "\n",
+                        resultRMQ, paar.first, paar.second)));
         result.push_back(resultRMQ);
       }
     } else {
@@ -120,7 +125,7 @@ int main(int argc, char const *argv[]) {
   // std::cout << "********************" << std::endl;
   std::cout << "RESULT algo=" << TYPE_OF_PROGRAMM
             << " name=patrick_steil time=" << ms_int.count()
-            << " space=" << totalSpaceConsumption << std::endl;
+            << " space=" << (totalSpaceConsumption << 3) << std::endl;
   // std::cout << "********************" << std::endl;
   return 0;
 }
