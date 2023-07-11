@@ -5,128 +5,141 @@
 #include <iostream>
 #include <limits>
 #include <vector>
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
 
-class EliasFanoEncoding {
+class EliasFano {
 private:
-  BitVector upperBits;
-  BitVector lowerBits;
-  unsigned long long numElements;
-  unsigned long long upperSize;
+    BitVector upperBits;
+    BitVector lowerBits;
+    uint64_t numElements;
+    uint64_t upperSize;
+    uint8_t offset;
 
 public:
-  EliasFanoEncoding(const std::vector<unsigned long long> &numbers)
-      : numElements(numbers.size()) {
-    // old version: upperSize = std::floor(std::log2(numElements));
-    upperSize = std::ceil(std::log2(numElements));
+    EliasFano(std::vector<uint64_t>& numbers)
+        : numElements(numbers.size())
+    {
+	uint64_t maxElement = numbers[numElements-1];
+	offset = 64 - std::ceil(std::log2(maxElement));
+        // old version: upperSize = std::floor(std::log2(numElements));
+        upperSize = std::ceil(std::log2(numElements));
 
-    // old version: std::vector<bool> upperBitsVEC((numElements << 1) + 1,
-    // false);
-    std::vector<bool> upperBitsVEC(numElements * 3, false);
-    std::vector<bool> lowerBitsVEC(numElements * (64 - upperSize), false);
+        // old version: std::vector<bool> upperBitsVEC((numElements << 1) + 1,
+        // false);
+        std::vector<bool> upperBitsVEC(numElements * 3 + 1, false);
+        std::vector<bool> lowerBitsVEC(numElements * (64 - offset - upperSize) + 1, false);
 
-    unsigned long long i(0);
+        uint64_t i(0);
 
-    for (unsigned long long element : numbers) {
-      unsigned long long MSB = element >> (64 - upperSize);
-      unsigned long long LSB = (element & lowerMASK());
+        for (uint64_t element : numbers) {
+            uint64_t MSB = element >> (64 - offset - upperSize);
+            uint64_t LSB = (element & lowerMASK());
 
-      // assert((MSB + i) < ((numElements << 1) + 1));
-      upperBitsVEC[MSB + i] = true;
+            // assert((MSB + i) < ((numElements << 1) + 1));
+            upperBitsVEC[MSB + i] = true;
 
-      for (unsigned long long j = 0; j < (64 - upperSize); ++j) {
-        lowerBitsVEC[i * (64 - upperSize) + j] =
-            ((LSB >> ((64 - upperSize) - 1 - j)) & 1);
-      }
-      ++i;
+            for (uint64_t j = 0; j < (64 - offset - upperSize); ++j) {
+                lowerBitsVEC[i * (64 - offset- upperSize) + j] = ((LSB >> ((64 - offset - upperSize) - 1 - j)) & 1);
+            }
+            ++i;
+        }
+
+        upperBits.buildVector(upperBitsVEC);
+        lowerBits.buildVector(lowerBitsVEC);
+
+        // std::cout
+        //     << "*****************\nDone building datastructures\n*****************"
+        //     << std::endl;
     }
 
-    upperBits.buildVector(upperBitsVEC);
-    lowerBits.buildVector(lowerBitsVEC);
+    // Predecessor Method
+    uint64_t pred(uint64_t x) const
+    {
+        // see https://arxiv.org/pdf/2003.11835.pdf
+        if ((uint64_t)(*this)[0] >= x) [[unlikely]]
+            return std::numeric_limits<uint64_t>::max();
+        if ((uint64_t)(*this)[numElements - 1] <= x) [[unlikely]]
+            return (*this)[numElements - 1];
 
-    // std::cout
-    //     << "*****************\nDone building datastructures\n*****************"
-    //     << std::endl;
-  }
+        uint64_t xHIGH = (x >> (64 - offset - upperSize));
+        uint64_t xLOW = (x & lowerMASK());
+        uint64_t lower(0);
+        if (xHIGH > 0) [[likely]] {
+            lower = upperBits.select(0, xHIGH - 1) - xHIGH + 1;
+        }
+        uint64_t upper = upperBits.select(0, xHIGH) - xHIGH;
 
-  // Predecessor Method
-  unsigned long long pred(unsigned long long x) const {
-    // see https://arxiv.org/pdf/2003.11835.pdf
-    if ((unsigned long long)(*this)[0] >= x) [[unlikely]]
-      return std::numeric_limits<unsigned long long>::max();
-    if ((unsigned long long)(*this)[numElements - 1] <= x) [[unlikely]]
-      return (*this)[numElements - 1];
-
-    unsigned long long xHIGH = (x >> (64 - upperSize));
-    unsigned long long xLOW = (x & lowerMASK());
-    unsigned long long lower(0);
-    if (xHIGH > 0) [[likely]]
-      lower = upperBits.select(0, xHIGH - 1) - xHIGH + 1;
-    unsigned long long upper = upperBits.select(0, xHIGH) - xHIGH;
-
-    for (unsigned long long i(lower); i < upper; ++i) {
-      if (getLowerAsInt(i) > xLOW) {
-        return (*this)[i - 1];
-      }
+        for (uint64_t i(lower); i < upper; ++i) {
+            if (getLowerAsInt(i) > xLOW) {
+                return (*this)[i - 1];
+            }
+        }
+        if (lower > 0 && getLowerAsInt(lower) > xLOW)
+            return (*this)[lower - 1];
+        return (*this)[upper];
     }
-    if (lower > 0 && getLowerAsInt(lower) > xLOW)
-      return (*this)[lower - 1];
-    return (*this)[upper];
-  }
 
-  // Acces the index'th element
-  unsigned long long operator[](unsigned long long index) const {
-    assert(valid_index(index));
+    // Acces the index'th element
+    uint64_t operator[](uint64_t index) const
+    {
+        assert(valid_index(index));
 
-    unsigned long long result = static_cast<unsigned long long>(
-        ((unsigned long long)upperBits.select(1, index) - index)
-        << (64 - upperSize));
+        uint64_t result = static_cast<uint64_t>(
+            ((uint64_t)upperBits.select(1, index) - index)
+            << (64 - offset - upperSize));
 
-    return static_cast<unsigned long long>(
-        result | static_cast<unsigned long long>(getLowerAsInt(index)));
-  }
-
-  inline unsigned long long getLowerAsInt(unsigned long long index) const {
-    assert(valid_index(index));
-    unsigned long long lower = 0;
-    for (unsigned long long i = 0; i < lowerSize(); ++i) {
-      assert(index * lowerSize() + i < lowerBits.size());
-      lower |= lowerBits[index * lowerSize() + i];
-      lower <<= 1;
+        return static_cast<uint64_t>(
+            result | static_cast<uint64_t>(getLowerAsInt(index)));
     }
-    lower >>= 1;
-    return lower;
-  }
 
-  inline void printInfo() const noexcept {
-    std::cout << "Elias-Fano Stats:\n";
-    std::cout << "Upper-Size:            " << upperSize << std::endl;
-    std::cout << "Lower-Size:            " << lowerSize() << std::endl;
-    std::cout << "Elements:              " << size() << std::endl;
-    std::cout << "Space-Consumption:     " << totalSizeByte() << std::endl;
-  }
+    inline uint64_t getLowerAsInt(uint64_t index) const
+    {
+        assert(valid_index(index));
+        uint64_t lower = 0;
+        for (uint64_t i = 0; i < lowerSize(); ++i) {
+            assert(index * lowerSize() + i < lowerBits.size());
+            lower |= lowerBits[index * lowerSize() + i];
+            lower <<= 1;
+        }
+        lower >>= 1;
+        return lower;
+    }
 
-  inline unsigned long long lowerSize() const { return 64 - upperSize; }
+    inline void printInfo() const noexcept
+    {
+        std::cout << "Elias-Fano Stats:\n";
+        std::cout << "Upper-Size:            " << upperSize << std::endl;
+        std::cout << "Lower-Size:            " << lowerSize() << std::endl;
+        std::cout << "Elements:              " << size() << std::endl;
+        std::cout << "Space-Consumption:     " << totalSizeByte() << std::endl;
+    }
 
-  inline unsigned long long upperMASK() const { return ~(lowerMASK()); }
+    inline uint64_t lowerSize() const { return 64 - offset - upperSize; }
 
-  inline unsigned long long lowerMASK() const {
-    return (unsigned long long)(~0) >> upperSize;
-  }
+    inline uint64_t upperMASK() const { return ~(lowerMASK()); }
 
-  inline bool valid_index(unsigned long long index) const {
-    return 0 <= index && index < numElements;
-  }
+    inline uint64_t lowerMASK() const
+    {
+        return (uint64_t)(~0) >> (upperSize);
+    }
 
-  unsigned long long totalSizeByte() const noexcept {
-    unsigned long long total(0);
+    inline bool valid_index(uint64_t index) const
+    {
+        return index < numElements;
+    }
 
-    total += upperBits.totalSizeByte();
-    total += lowerBits.totalSizeByte();
-    total += sizeof(numElements);
-    total += sizeof(upperSize);
+    inline uint64_t totalSizeByte() const noexcept
+    {
+        uint64_t total(0);
 
-    return total;
-  }
+        total += upperBits.totalSizeByte();
+        total += lowerBits.totalSizeByte();
+        total += sizeof(numElements);
+        total += sizeof(upperSize);
+        total += sizeof(offset);
+        return total;
+    }
 
-  unsigned long long size() const { return numElements; }
+    uint64_t size() const { return numElements; }
 };
