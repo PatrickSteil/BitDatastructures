@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.14)  11 JUL 2023 11:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.14)  11 JUL 2023 16:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -643,39 +643,42 @@ Package: numprint 2012/08/20 v1.39 Print numbers (HH)
 \c@nprt@blockcnt=\count323
 \c@nprt@cntprint=\count324
 
-No configuration file `numprint.cfg' found.) (./main.aux)
+No configuration file `numprint.cfg' found.)
+(/usr/local/texlive/2022/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Info: Redefining \microtypecontext on input line 43.
-Package microtype Info: Applying patch `item' on input line 43.
-Package microtype Info: Applying patch `toc' on input line 43.
-Package microtype Info: Applying patch `eqnum' on input line 43.
-Package microtype Info: Applying patch `footnote' on input line 43.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Info: Redefining \microtypecontext on input line 48.
+Package microtype Info: Applying patch `item' on input line 48.
+Package microtype Info: Applying patch `toc' on input line 48.
+Package microtype Info: Applying patch `eqnum' on input line 48.
+Package microtype Info: Applying patch `footnote' on input line 48.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 43.
+LaTeX Info: Redefining \showhyphens on input line 48.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -725,7 +728,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \c@lstlisting=\count331
-Package hyperref Info: Link coloring OFF on input line 43.
+Package hyperref Info: Link coloring OFF on input line 48.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -739,9 +742,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count332
 )
-LaTeX Info: Redefining \ref on input line 43.
-LaTeX Info: Redefining \pageref on input line 43.
-LaTeX Info: Redefining \nameref on input line 43.
+LaTeX Info: Redefining \ref on input line 48.
+LaTeX Info: Redefining \pageref on input line 48.
+LaTeX Info: Redefining \nameref on input line 48.
  (./main.out) (./main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
@@ -749,8 +752,8 @@ LaTeX Info: Redefining \nameref on input line 43.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 4
-6.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 5
+1.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -759,37 +762,37 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 4
-6.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 5
+1.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 4
-6.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 5
+1.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-46.
+51.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-46.
+51.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 46.
+(Font)              <10> on input line 51.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 46.
+(Font)              <7> on input line 51.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 46.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 46.
+(Font)              <5> on input line 51.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 51.
 
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -798,7 +801,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/local/texlive/2022/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 46.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 51.
 
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -808,7 +811,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Trying to load font information for U+fontawesomefree1 on i
-nput line 46.
+nput line 51.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/fontawesome5/ufontawesomefree1.fd
 )
@@ -818,7 +821,7 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 6
-8.
+7.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -826,54 +829,75 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-<example-image-plain.pdf, id=33, 321.2pt x 240.9pt>
+<example-image-plain.pdf, id=49, 321.2pt x 240.9pt>
 File: example-image-plain.pdf Graphic file (type pdf)
 <use example-image-plain.pdf>
-Package pdftex.def Info: example-image-plain.pdf  used on input line 69.
+Package pdftex.def Info: example-image-plain.pdf  used on input line 68.
 (pdftex.def)             Requested size: 39.99796pt x 13.99756pt.
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 6
-9.
+8.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 File: example-image-plain.pdf Graphic file (type pdf)
 <use example-image-plain.pdf>
-Package pdftex.def Info: example-image-plain.pdf  used on input line 69.
+Package pdftex.def Info: example-image-plain.pdf  used on input line 68.
 (pdftex.def)             Requested size: 61.99905pt x 13.99756pt.
  [1.1
 
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map} </usr/lo
-cal/texlive/2022/texmf-dist/tex/latex/mwe/example-image-plain.pdf>] (./main.bbl
+cal/texlive/2022/texmf-dist/tex/latex/mwe/example-image-plain.pdf>] (./efplot.t
+ex
+\gptboxheight=\skip69
+\gptboxwidth=\skip70
+\gptboxtext=\box62
+<efplot.pdf, id=79, 361.35pt x 252.945pt>
+File: efplot.pdf Graphic file (type pdf)
+<use efplot.pdf>
+Package pdftex.def Info: efplot.pdf  used on input line 117.
+(pdftex.def)             Requested size: 361.35463pt x 252.94823pt.
+)
+(./rmqplot.tex
+Package epstopdf Info: Source file: <rmqplot.eps>
+(epstopdf)                    date: 2023-07-11 15:28:48
+(epstopdf)                    size: 19817 bytes
+(epstopdf)             Output file: <rmqplot-eps-converted-to.pdf>
+(epstopdf)                    date: 2023-07-11 15:28:57
+(epstopdf)                    size: 2859 bytes
+(epstopdf)             Command: <repstopdf --outfile=rmqplot-eps-converted-to.p
+df rmqplot.eps>
+(epstopdf)             \includegraphics on input line 121.
+Package epstopdf Info: Output file is already uptodate.
+<rmqplot-eps-converted-to.pdf, id=81, 361.35pt x 252.945pt>
+File: rmqplot-eps-converted-to.pdf Graphic file (type pdf)
+<use rmqplot-eps-converted-to.pdf>
+Package pdftex.def Info: rmqplot-eps-converted-to.pdf  used on input line 121.
+(pdftex.def)             Requested size: 361.35463pt x 252.94823pt.
+)
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 9.
+(Font)              <9> on input line 93.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 9.
-) [2.2]
-(./main.aux)
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 26E70200B4347318838C8550B0A64B43;941
-(rerunfilecheck)             After:  8CC7645D835899A061F32BA207538962;1346.
+(Font)              <6> on input line 93.
+ (./main.bbl [2.2] [3.3 <./efplot.pdf> <./rmqplot-eps-converted-to.pdf>]) [4.4]
+ (./main.aux)
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 5BA381E3A9EEBBB8E97B379A5C9D5E19;1535.
  ) 
 Here is how much of TeX's memory you used:
- 23746 strings out of 478268
- 420513 string characters out of 5846347
- 745681 words of memory out of 5000000
- 41392 multiletter control sequences out of 15000+600000
- 567874 words of font info for 166 fonts, out of 8000000 for 9000
+ 23910 strings out of 478268
+ 423170 string characters out of 5846347
+ 746629 words of memory out of 5000000
+ 41508 multiletter control sequences out of 15000+600000
+ 569023 words of font info for 177 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 85i,10n,90p,1001b,447s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 85i,11n,90p,1040b,554s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/
 texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/20
-22/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/
-fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvi
-ps/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-m
-athsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/fontawesome5/fa5f
+22/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-d
+ist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/
+dvips/lm/lm-ts1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-m
+athex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/fontawesome5/fa5f
 ree1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/fontawesome5/Fo
 ntAwesome5Free-Regular.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publ
 ic/lm/lmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmcs
@@ -881,18 +905,20 @@ c10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></
 usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/
 texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/local/texlive/202
 2/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2022/texmf-dis
-t/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type
-1/public/lm/lmr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/
-lmri10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri9.pfb>
-</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr/local
-/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive
-/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texm
-f-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fon
-ts/type1/public/lm/lmtt9.pfb>
-Output written on main.pdf (2 pages, 307637 bytes).
+t/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type
+1/public/lm/lmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/
+lmr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri10.pfb><
+/usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri9.pfb></usr/local/
+texlive/2022/texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr/local/texlive/202
+2/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2022/texmf-
+dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts
+/type1/public/lm/lmsy9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publ
+ic/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt
+9.pfb>
+Output written on main.pdf (4 pages, 336403 bytes).
 PDF statistics:
- 170 PDF objects out of 1000 (max. 8388607)
- 127 compressed objects within 2 object streams
- 17 named destinations out of 1000 (max. 500000)
- 60470 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 208 PDF objects out of 1000 (max. 8388607)
+ 157 compressed objects within 2 object streams
+ 22 named destinations out of 1000 (max. 500000)
+ 60512 words of extra memory for PDF output out of 61914 (max. 10000000)
 
