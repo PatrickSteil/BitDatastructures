@@ -49,9 +49,9 @@ public:
         size_t total = 0;
 
         total += bits.size() * CHAR_BIT;
-        total += sizeof(rankTable);
-        total += sizeof(selectTableTrue);
-        total += sizeof(selectTableFalse);
+        total += rankTable.size() * sizeof(rankTable[0]);
+        total += selectTableTrue.size() * sizeof(selectTableTrue[0]);
+        total += selectTableFalse.size() * sizeof(selectTableFalse[0]);
         return total;
     }
 
