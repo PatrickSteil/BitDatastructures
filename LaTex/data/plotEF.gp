@@ -4,8 +4,10 @@ set datafile separator ','
 set style data histograms
 set style fill solid border -1
 set tics scale 0
-set xzeroaxis
+set xtics rotate by 45 right
+#set xzeroaxis
 set ytics nomirror
+set autoscale y
 set y2tics
 set ylabel "Space [bits]"
 set y2label "Time [ms]"

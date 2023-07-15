@@ -1,7 +1,11 @@
 \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate]{lipics-v2021}
 
+\hideLIPIcs
+
 \usepackage{amsmath}
 \usepackage{numprint}
+\npdecimalsign{.} % we want . not , in numbers
+
 \usepackage{xspace}
 
 \newcommand{\codestyling}[1]{\texttt{#1}}
@@ -11,24 +15,39 @@
 \newcommand{\Eg}{E.g.,\xspace~}
 \newcommand{\etal}{et~al.}
 
+\setlength\parfillskip{0pt plus .4\textwidth}
+\setlength\emergencystretch{.1\textwidth}
+\clubpenalty10000
+\widowpenalty10000
+\displaywidowpenalty=10000
+
 \bibliographystyle{plainurl}
 
 \title{Advanced Data Structures: Final Report}
+\titlerunning{Final Report}
 
 \author{Steil, Patrick}{2513240}{patrick.steil@student.kit.edu}{}{}
-
 \authorrunning{Steil, Patrick}
 
 \Copyright{P. Steil}
 
 \keywords{Predecessor, Range Minimum Queries} %TODO mandatory; please add comma-separated list of keywords
+\category{}
+\relatedversion{}
 
-\category{} %optional, e.g. invited paper
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10003752.10003809.10010031</concept_id>
+       <concept_desc>Theory of computation~Data structures design and analysis</concept_desc>
+       <concept_significance>100</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
 
-\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other respository/website
-%\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
+\ccsdesc[100]{Theory of computation~Data structures design and analysis}
 
-\supplement{Source Code: \url{https://github.com/PatrickSteil/BitDatastructures}}
+\supplementdetails[subcategory={Code}]{Software}{https://github.com/PatrickSteil/BitDatastructures}
 
 %\nolinenumbers %uncomment to disable line numbering
 
@@ -50,31 +69,32 @@
 	
 	\maketitle
 	
-	\section{Introduction}
-	\label{sec:introduction}
-	
+	%\section{Introduction}
+	%\label{sec:introduction}
+	\begin{abstract}
 	In this work, different data structures are implemented that can efficiently answer two types of queries: predecessor and range-minimum queries. For this purpose, the Elias-Fano coding and several “Block-Lookup” data structures are implemented and tested. The project is part of the “Advanced Data Structures” lecture at KIT in the summer semester 2023 with Dr.~Florian Kurpicz.
+	\end{abstract}
 	\section{Algorithms and Data Structures (DS)}
 	\label{sec:algorithms}
-	\paragraph*{Predecessor data structures}
+	\paragraph*{Predecessor Data Structures}
 	Predecessor data structures are unique data structures developed to efficiently solve the problem of predecessor access. The predecessor access problem is to find the predecessor (the element with the highest value that is less than a given element) in a set of elements.
 	Without additional memory consumption, elements can be stored sorted or in a binary search tree, whereby a predecessor query can subsequently be answered with a runtime of~$\mathcal{O}\left(\log(n)\right)$. However, this is too slow in practice, which is why techniques such as \textit{x/y-fast-tries}~\cite{WILLARD198381} or \textit{Elias-Fano encoding}~\cite{10.1145/321812.321820} have been developed. The idea of the last technique is to divide the representation of numbers into two parts, on the one hand, the \textit{most significant} bits with a length of~$\left\lceil\log\left(n\right)\right\rceil$ and on the other hand the remaining bits. This way, all numbers with the same \textit{most significant} bits are ``grouped'' during a query, meaning a query only has to look at one ``group'' of numbers. However, this may result in all numbers being scanned if the numbers are not favourable.	
-	\paragraph*{Range minimum queries}
-	Range minimum queries (RMQ) refer to a particular type of search operation in data structures where the minimum value within a given interval (range) of elements in a set is to be found. The goal is to efficiently find the biggest value smaller than a given element among a subset of elements. Analogous to the predecessor data structures, trade-offs exist between additional memory and runtime (the different pre-computation times can be neglected for static data). To answer RMQ quickly, one can use~$\Theta\left(n^2\right)$ additional memory to calculate all possible queries in advance and thus obtain a constant query time (a lookup). One can now only precompute queries of specific ranges to reduce the impractical quadratic memory. If the size of this range is cleverly chosen, one obtains constant query time and down to only linear additional memory.
+	\paragraph*{Range-Minimum Queries}
+	Range minimum queries (RMQ) refer to a particular type of search operation in data structures where the minimum value within a given interval (range) of elements in a set is to be found. The goal is to efficiently find the biggest value smaller than a given element among a subset of elements. Analogous to the predecessor data structures, trade-offs exist between additional memory and runtime (the different pre-computation times can be neglected for static data). To answer RMQ quickly, one can use~$\Theta\left(n^2\right)$ additional memory to calculate all possible queries in advance and thus obtain a constant query time (only a memory access). One can now only precompute queries of specific ranges to reduce the impractical quadratic memory. If the size of this range is cleverly chosen, one obtains constant query time and down to only linear additional memory.
 	
 	\section{Implementation}
 	
-	\subsection{Elias-Fano}
-	For an efficient Elias-Fano implementation, one needs a bit-vector data structure that can efficiently answer \textsc{select} query. The current Elias-Fano data structure consists of two-bit vectors: \textit{upperBits} and \textit{lowerBits}. The former encodes in~$2n+1$ bits the \textit{most significant bits} (MSB) of the numbers, and in \textit{lowerBits}, the remaining bits (LSB) of the numbers are stored straightforwardly. Please see Appendix~\ref{app:sec::ef} on the ``minor'' Elias-Fano Problem, which I mentioned in person. Otherwise, my implementation of \textsc{predecessor} is based on the description of~\cite{pibiri2020succinct}. To identify the predecessor of the number~$x$, use \textsc{select} queries to find the ``leftmost'' and ``rightmost'' index of numbers for which the MSB is equal to the MSB of~$x$. Subsequently, scanning this range to find the predecessor is straightforward.
+	\paragraph*{Elias-Fano}
+	For an efficient Elias-Fano implementation, one needs a bit-vector data structure that can efficiently answer \textsc{select} query. The current Elias-Fano data structure consists of two bit vectors: \textit{upperBits} and \textit{lowerBits}. The former encodes in~$2n+1$ bits the \textit{most significant bits} (MSB) of the numbers, and in \textit{lowerBits}, the remaining bits (LSB) of the numbers are stored straightforwardly. Please see Appendix~\ref{app:sec::ef} on the ``minor'' Elias-Fano Problem, which I mentioned in person. Otherwise, my implementation of \textsc{predecessor} is based on the description of~\cite{pibiri2020succinct}. To identify the predecessor of the number~$x$, I use \textsc{select} queries to find the ``leftmost'' and ``rightmost'' index of numbers for which the MSB is equal to the MSB of~$x$. Subsequently, scanning this range to find the predecessor is straightforward.
 
-	\subsection{Range-Mimimum Queries}
-	For the range-minimum queries, I implemented all 3 data structures, \, i.e. the one with~$\mathcal{O}\left(n^2\right)$, ~$\mathcal{O}\left(n \log\left(n\right)\right)$ and the one with~$\mathcal{O}\left(n\right)$ additional memory. I have not implemented the latter data structure precisely as in the lecture; namely, I have not implemented the \textit{Cartesian Trees}. For the last DS, I have split the query into three parts. I check which parts of the given range are ``covered'' by blocks and then scan the initial and final part (from the left index to the first ``completely covered'' block and analogously from the last covered block to the end) and the covered blocks. The initial and final check is usually done with Cartesian trees; I have implemented a linear search over the part of the array. Note that this approach is very cache-efficient and for small enough ranges faster than using Cartesian trees.
+	\paragraph*{Range-Mimimum Queries}
+	For the range-minimum queries, I implemented all 3 data structures, \ie the one with~$\mathcal{O}\left(n^2\right)$, ~$\mathcal{O}\left(n \log\left(n\right)\right)$ and the one with~$\mathcal{O}\left(n\right)$ additional memory. I have not implemented the latter data structure precisely as in the lecture; namely, I have not implemented the \textit{Cartesian Trees}. Instead, I have split the query into three parts. I check which parts of the given range are ``covered'' by blocks and then scan the initial and final part (from the left index to the first ``completely covered'' block and analogously from the last covered block to the end) and the covered blocks. The initial and final check is usually done with Cartesian trees; I have implemented a linear search over the part of the array. Note that this approach is very cache-efficient and for small enough ranges faster than using Cartesian trees.
 	
 	\section{Experiments}
 	%\subsection{Hardware \& Code}
-	The programming language used was \codestyling{C++}, and the compiler was \codestyling{G++} with optimisations enabled. All experiments were conducted on a ThinkCentre running Ubuntu 22.10 with an \codestyling{Intel(R) Core(TM) i5-8500T CPU} @ 2\,.10GHz processor. The code can be found in this repository \url{https://github.com/PatrickSteil/BitDatastructures}.
-	\subsection{Elias-Fano}
-	The performance (based on the provided benchmarks) of the Elias-Fano coding can be seen in Figure~\ref{fig:ef}. It can be noticed that both the memory consumption and the query depend on the distribution of the numbers. In the first file \textit{ex1.txt}, \numprint{1000000} numbers are present in the \textit{total} range of~$\left[0, 2^{64}\right)$, \ie scattered throughout the universe. On the other hand, in the file \textit{ex2.txt}, only ``small'' numbers are present, \ie very one-sidedly distributed in the universe. Many most significant bits are 0 for all numbers, \ie storing this ``unnecessary'' information is unnecessary.	
+	The programming language used was \codestyling{C++}, and the compiler was \codestyling{G++} with optimisations enabled. All experiments were conducted on a ThinkCentre running Ubuntu 22.10 with an \codestyling{Intel(R) Core(TM) i5-8500T CPU} @ 2\,.10GHz processor.
+	\paragraph*{Elias-Fano}
+	The performance (based on the provided benchmarks) of the Elias-Fano encoding can be seen in Figure~\ref{fig:ef}. It can be noticed that both the memory consumption and the query depend on the distribution of the numbers. In the first file, \numprint{1000000} numbers are present in the \textit{total} range of~$\left[0, 2^{64}\right)$, \ie scattered throughout the universe. On the other hand, in the file \textit{File 2}, only ``small'' numbers are present, \ie very one-sidedly distributed in the universe. If one would not resize the universe to the maximum number occuring in the given set, basically all MSB are 0 for all numbers, resulting in no speedup compared to linear search.
 	\begin{figure}[htbp]
 		\begin{center}
 			\resizebox{.9\linewidth}{!}{
@@ -85,8 +105,8 @@
 		\end{center}
 	\end{figure}
 
-	\subsection{Range-Minimum Queries}
-	Figure~\ref{fig:rmq} visualises the performance of the RMQ data structures, namely the two with~$\mathcal{O}\left(n \log n\right)$ and~$\mathcal{O}\left(n\right)$ additional memory consumption. The data structure with~$\mathcal{O}\left(n^2\right)$ memory consumption could not be executed due to too high memory consumption. It can be seen that the memory consumption between the two DSs is very different, namely, as expected, with significantly less memory for the DS with linear memory overhead. Interestingly, the query performance varies significantly between the DS with linear memory overhead because the ranges in the second file \textit{ex2.txt} are relatively small. In my implementation, this only calls a local sequential search, which is the most cache-efficient and, for small ranges, the fastest way. Otherwise, the query performance of the~$\mathcal{O}\left(n \log n\right)$ DS does not depend on the range since the query performs lookups ``independent'' of the given range.
+	\paragraph*{Range-Minimum Queries}
+	Figure~\ref{fig:rmq} visualises the performance of the RMQ data structures, namely the two with~$\mathcal{O}\left(n \log n\right)$ and~$\mathcal{O}\left(n\right)$ additional memory consumption. The data structure with~$\mathcal{O}\left(n^2\right)$ memory consumption could not be executed due to too high memory consumption. It can be seen that the memory consumption between the two DSs is very different, namely, as expected, with significantly less memory for the DS with linear memory overhead. Interestingly, the query performance varies significantly between the DS with linear memory overhead because the ranges in the second file are relatively small. In my implementation, this only calls a local sequential search, which is the most cache-efficient and, for small ranges, the fastest way. Otherwise, the query performance of the~$\mathcal{O}\left(n \log n\right)$ DS does not depend on the range since the query performs lookups ``independent'' of the given range.
 	\begin{figure}[htbp]
 		\begin{center}
 			\resizebox{.9\linewidth}{!}{
